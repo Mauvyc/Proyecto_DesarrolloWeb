@@ -3,6 +3,12 @@ import cors from "cors";
 import {Pool} from 'pg';
 import { FRONTEND_URL, ALLOWED_ORIGINS, DB_USER, DB_HOST, DB_DATABASE, DB_PASSWORD, DB_PORT, PORT } from "./config.js";
 import 'dotenv/config';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// Obtener el directorio actual (necesario para ESM)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 
@@ -44,6 +50,14 @@ app.get("/ping", async(req, res) => {
 
 app.get("/", (req, res) => {
     res.json({ users: [] });
+});
+
+// Servir archivos estáticos desde la carpeta 'public'
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Ruta específica para el favicon.ico para evitar error 404
+app.get('/favicon.ico', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'favicon.ico'));
 });
 
 app.listen(PORT, () => {
