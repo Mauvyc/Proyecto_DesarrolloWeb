@@ -1,7 +1,8 @@
 import { useState } from "react";
 import "./App.css";
 
-const URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:4000";
+// Usamos directamente la URL de Render para el backend sin variables de entorno
+// const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:4000";
 
 function App() {
   const [result, setResult] = useState("");
@@ -12,9 +13,8 @@ function App() {
 
       <button
         onClick={async () => {
-          const res = await fetch("http://localhost:4000/ping");
+          const res = await fetch("https://backend-web-clcy.onrender.com/ping");
           const data = await res.json();
-          console.log(data);
           setResult(data);
         }}
       >
