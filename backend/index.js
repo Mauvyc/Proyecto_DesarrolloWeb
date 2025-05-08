@@ -5,7 +5,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 // Importar configuración
-import { FRONTEND_URL, ALLOWED_ORIGINS, PORT } from "./config/config.js";
+import { FRONTEND_URL, ALLOWED_ORIGINS, PORT, DB_HOST, DB_USER, DB_DATABASE, DB_PORT, DB_SCHEMA } from "./config/config.js";
 
 // Importar rutas
 import authRoutes from './routes/authRoutes.js';
@@ -96,6 +96,14 @@ const PORT_NUMBER = PORT || 4000;
 app.listen(PORT_NUMBER, () => {
     console.log(`Servidor ejecutándose en el puerto ${PORT_NUMBER}`);
     console.log(`URL frontend: ${FRONTEND_URL}`);
+    
+    // Imprimir información de configuración de BD para debugging
+    console.log('Configuración de base de datos:');
+    console.log(`- Host: ${DB_HOST}`);
+    console.log(`- Puerto: ${DB_PORT}`);
+    console.log(`- DB: ${DB_DATABASE}`);
+    console.log(`- Usuario: ${DB_USER}`);
+    console.log(`- Esquema: ${DB_SCHEMA || 'public'}`);
 });
 
 export default app; 
