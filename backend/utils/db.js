@@ -8,7 +8,7 @@ export const pool = new Pool({
     database: DB_DATABASE,
     password: DB_PASSWORD,
     port: DB_PORT,
-    ssl: DB_SSL ? { rejectUnauthorized: false } : false,
+    ssl: { rejectUnauthorized: false },
 });
 
 // Verificar la conexión a la base de datos al iniciar la aplicación
