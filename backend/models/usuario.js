@@ -31,7 +31,7 @@ class UsuarioModel {
     
     // Usar la función almacenada sp_registerbeneficiario
     const result = await pool.query(
-      `CALL ${DB_SCHEMA}.sp_registerbeneficiario($1, $2, $3, $4, $5, $6)`,
+      `SELECT * FROM ${DB_SCHEMA}.sp_registerbeneficiario($1, $2, $3, $4, $5, $6)`,
       [nombre, apellido, email, hashedPassword, dni, telefono]
     );
     
