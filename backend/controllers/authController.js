@@ -136,5 +136,6 @@ export const getProfile = async (req, res) => {
             error.message
         );
         return ResponseFormatter.send(res, response);
+        // hola
     }
 }; 
