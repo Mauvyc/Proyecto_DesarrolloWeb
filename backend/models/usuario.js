@@ -29,15 +29,42 @@ class UsuarioModel {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
     
-    // Usar la función almacenada sp_registerbeneficiario
-    const result = await pool.query(
-      `SELECT * FROM ${DB_SCHEMA}.sp_registerbeneficiario($1, $2, $3, $4, $5, $6)`,
-      [nombre, apellido, email, hashedPassword, dni, telefono]
-    );
+    // Iniciar transacción para garantizar consistencia
+    const client = await pool.connect();
     
-    // Obtener el usuario recién creado
-    const newUser = await this.findByEmail(email);
-    return newUser;
+    try {
+      await client.query('BEGIN');
+      
+      // 1. Crear el usuario
+      const userResult = await client.query(
+        `INSERT INTO ${DB_SCHEMA}.usuario (nombre, apellido, email, password, rol) 
+         VALUES ($1, $2, $3, $4, $5) 
+         RETURNING usuarioid, nombre, apellido, email, rol`,
+        [nombre, apellido, email, hashedPassword, 'Beneficiario']
+      );
+      
+      const newUser = userResult.rows[0];
+      
+      // 2. Crear el beneficiario asociado
+      await client.query(
+        `INSERT INTO ${DB_SCHEMA}.beneficiario (nombre, apellido, email, telefono, usuarioid, dni) 
+         VALUES ($1, $2, $3, $4, $5, $6)`,
+        [nombre, apellido, email, telefono, newUser.usuarioid, dni]
+      );
+      
+      await client.query('COMMIT');
+      
+      // Completar la información del usuario con los datos del beneficiario
+      newUser.telefono = telefono;
+      newUser.dni = dni;
+      
+      return newUser;
+    } catch (error) {
+      await client.query('ROLLBACK');
+      throw error;
+    } finally {
+      client.release();
+    }
   }
 
   // Validar credenciales de usuario
