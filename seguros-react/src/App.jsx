@@ -10,6 +10,7 @@ import PolizaSelectionPage from "./views/pages/PolizaSelectionPage";
 import VehiculoRegistroPage from "./views/pages/VehiculoRegistroPage";
 import PagoPolizaPage from "./views/pages/PagoPolizaPage";
 import NotificacionesPage from "./views/pages/NotificacionesPage";
+import ComingSoonPage from "./views/pages/ComingSoonPage";
 import "./views/styles/App.css";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:4000";
@@ -100,6 +101,29 @@ function AppRoutes() {
           <NotificacionesPage />
         </ProtectedRoute>
       } />
+      
+      {/* Nuevas rutas para el Dashboard */}
+      <Route path="/mis-polizas" element={
+        <ProtectedRoute>
+          <PolizaSelectionPage />
+        </ProtectedRoute>
+      } />
+      <Route path="/reportar-siniestro" element={
+        <ProtectedRoute>
+          <ComingSoonPage title="Reportar Siniestro" />
+        </ProtectedRoute>
+      } />
+      <Route path="/pagos" element={
+        <ProtectedRoute>
+          <PagoPolizaPage />
+        </ProtectedRoute>
+      } />
+      <Route path="/atencion-cliente" element={
+        <ProtectedRoute>
+          <ComingSoonPage title="Atención al Cliente" />
+        </ProtectedRoute>
+      } />
+      
       {/* Ruta por defecto para manejar rutas inexistentes */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

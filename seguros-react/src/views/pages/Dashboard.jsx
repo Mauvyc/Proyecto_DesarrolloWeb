@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import './Dashboard.css';
 
 const Dashboard = () => {
-  const { user, logout, isAuthenticated } = useAuth();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   
   useEffect(() => {
@@ -15,92 +14,90 @@ const Dashboard = () => {
     }
   }, [isAuthenticated, navigate]);
   
-  const handleLogout = () => {
-    logout();
-    navigate('/');
-  };
-  
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-  
   if (!user) {
     return <div className="loading">Cargando...</div>;
   }
+
+  // Funciones para navegar a las diferentes secciones
+  const irAPolizas = () => navigate('/mis-polizas');
+  const irAReportarSiniestro = () => navigate('/reportar-siniestro');
+  const irAPagos = () => navigate('/pagos');
+  const irAContacto = () => navigate('/atencion-cliente');
   
   return (
-    <div className="dashboard">
+    <div className="dashboard-container">
       {/* Header */}
-      <header className="dashboard-header">
-        <div className="dashboard-logo">
-          <span className="dashboard-logo-icon">🚗</span>
-          <h1 className="dashboard-logo-text">SegurosFlex</h1>
+      <header className="header">
+        <div className="logo">
+          <span className="logo-icon">🚗</span>
+          <h1>SegurosFlex</h1>
         </div>
         
-        <div className="dashboard-user">
-          <span className="user-greeting">Hola, {user.nombre}</span>
-          <button className="menu-toggle" onClick={toggleMenu}>
-            <span className="user-avatar">👤</span>
+        <div className="user-info">
+          <span>Hola, {user.nombre} {user.apellido}</span>
+          <button className="profile-button">
+            <span className="profile-icon">👤</span>
           </button>
-          
-          <div className={`user-menu ${isMenuOpen ? 'open' : ''}`}>
-            <div className="menu-header">
-              <span className="menu-username">{user.nombre} {user.apellido}</span>
-              <span className="menu-email">{user.email}</span>
-            </div>
-            <ul className="menu-items">
-              <li><button className="menu-item">Mi Perfil</button></li>
-              <li><button className="menu-item">Mis Seguros</button></li>
-              <li><button className="menu-item">Configuración</button></li>
-              <li><button className="menu-item logout" onClick={handleLogout}>Cerrar Sesión</button></li>
-            </ul>
-          </div>
         </div>
       </header>
       
       {/* Main content */}
-      <main className="dashboard-content">
-        <div className="welcome-section">
+      <main className="main-content">
+        <div className="welcome-banner">
           <h2>Bienvenido a tu panel de control</h2>
           <p>Desde aquí podrás gestionar tus pólizas y reclamaciones de manera fácil y rápida.</p>
         </div>
         
-        <div className="dashboard-grid">
-          <div className="dashboard-card">
-            <div className="card-icon">📋</div>
-            <h3>Mis Pólizas</h3>
-            <p>Gestiona tus pólizas activas y revisa su estado.</p>
-            <button className="card-action">Ver Pólizas</button>
+        <div className="cards-grid">
+          {/* Mis Pólizas */}
+          <div className="card">
+            <div className="card-icon">
+              <span>📋</span>
+            </div>
+            <div className="card-content">
+              <h3>Mis Pólizas</h3>
+              <p>Gestiona tus pólizas activas y revisa su estado.</p>
+              <button className="card-button" onClick={irAPolizas}>Ver Pólizas</button>
+            </div>
           </div>
           
-          <div className="dashboard-card">
-            <div className="card-icon">⚠️</div>
-            <h3>Reportar Siniestro</h3>
-            <p>Reporta un siniestro y sigue el proceso en línea.</p>
-            <button className="card-action">Reportar</button>
+          {/* Reportar Siniestro */}
+          <div className="card">
+            <div className="card-icon">
+              <span>⚠️</span>
+            </div>
+            <div className="card-content">
+              <h3>Reportar Siniestro</h3>
+              <p>Reporta un siniestro y sigue el proceso en línea.</p>
+              <button className="card-button" onClick={irAReportarSiniestro}>Reportar</button>
+            </div>
           </div>
           
-          <div className="dashboard-card">
-            <div className="card-icon">💰</div>
-            <h3>Pagos</h3>
-            <p>Consulta y realiza pagos de tus pólizas.</p>
-            <button className="card-action">Ver Pagos</button>
+          {/* Pagos */}
+          <div className="card">
+            <div className="card-icon">
+              <span>💰</span>
+            </div>
+            <div className="card-content">
+              <h3>Pagos</h3>
+              <p>Consulta y realiza pagos de tus pólizas.</p>
+              <button className="card-button" onClick={irAPagos}>Ver Pagos</button>
+            </div>
           </div>
           
-          <div className="dashboard-card">
-            <div className="card-icon">📞</div>
-            <h3>Atención al Cliente</h3>
-            <p>Contacta con un asesor para resolver tus dudas.</p>
-            <button className="card-action">Contactar</button>
+          {/* Atención al Cliente */}
+          <div className="card">
+            <div className="card-icon">
+              <span>📞</span>
+            </div>
+            <div className="card-content">
+              <h3>Atención al Cliente</h3>
+              <p>Contacta con un asesor para resolver tus dudas.</p>
+              <button className="card-button" onClick={irAContacto}>Contactar</button>
+            </div>
           </div>
         </div>
       </main>
-      
-      {/* Footer */}
-      <footer className="dashboard-footer">
-        <p>© 2025 SegurosFlex - Todos los derechos reservados.</p>
-        <p><Link to="/">Volver al inicio</Link></p>
-      </footer>
     </div>
   );
 };
