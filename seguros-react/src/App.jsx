@@ -1,7 +1,80 @@
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import "./App.css";
+import { AuthProvider, useAuth } from "./context/AuthContext";
+import LoginPage from "./views/pages/LoginPage";
+import RegisterPage from "./views/pages/RegisterPage";
+import Dashboard from "./views/pages/Dashboard";
+import HomePage from "./views/pages/HomePage";
+import "./views/styles/App.css";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:4000";
+
+// Componente protegido que verifica autenticación
+const ProtectedRoute = ({ children }) => {
+  const { isAuthenticated, isLoading } = useAuth();
+  
+  // Mostrar carga mientras verificamos el estado de autenticación
+  if (isLoading) {
+    return <div className="loading">Verificando autenticación...</div>;
+  }
+  
+  // Redirigir a login si no está autenticado
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+  
+  // Si está autenticado, mostrar el componente hijo
+  return children;
+};
+
+// Componente que redirige usuarios autenticados desde rutas públicas
+const PublicRoute = ({ children }) => {
+  const { isAuthenticated, isLoading } = useAuth();
+  
+  // Mostrar carga mientras verificamos el estado de autenticación
+  if (isLoading) {
+    return <div className="loading">Cargando...</div>;
+  }
+  
+  // Si ya está autenticado, redirigir al dashboard
+  if (isAuthenticated) {
+    return <Navigate to="/dashboard" replace />;
+  }
+  
+  // Si no está autenticado, mostrar el componente hijo
+  return children;
+};
+
+function AppRoutes() {
+  const { isLoading } = useAuth();
+  
+  if (isLoading) {
+    return <div className="loading">Cargando aplicación...</div>;
+  }
+  
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/login" element={
+        <PublicRoute>
+          <LoginPage />
+        </PublicRoute>
+      } />
+      <Route path="/registro" element={
+        <PublicRoute>
+          <RegisterPage />
+        </PublicRoute>
+      } />
+      <Route path="/dashboard" element={
+        <ProtectedRoute>
+          <Dashboard />
+        </ProtectedRoute>
+      } />
+      {/* Ruta por defecto para manejar rutas inexistentes */}
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
+  );
+}
 
 function App() {
   const [currentTime, setCurrentTime] = useState(null);
@@ -101,145 +174,11 @@ function App() {
   ];
 
   return (
-    <div className="app-container">
-      {/* Header */}
-      <header className="header">
-        <div className="logo-container">
-          <span className="logo-icon">🚗</span>
-          <h1 className="logo-text">SegurosFlex</h1>
-        </div>
-        <nav className="main-nav">
-          <ul>
-            <li><a href="#seguros">Seguros</a></li>
-            <li><a href="#promociones">Promociones</a></li>
-            <li><a href="#atencion">Atención al Cliente</a></li>
-            <li><a href="#nosotros">Sobre Nosotros</a></li>
-          </ul>
-        </nav>
-        <div className="nav-actions">
-          <button className="search-btn" aria-label="Buscar">🔍</button>
-          <button className="phone-btn" aria-label="Llamar">📞</button>
-          <button className="login-btn">Ingresa a tu cuenta</button>
-        </div>
-      </header>
-
-      {/* Hero Section */}
-      <section className="hero">
-        <div className="hero-content">
-          <h2 className="hero-title">
-            <span className="hero-car-icon">🚗</span> Protege tu vehículo con <span className="brand-highlight">SegurosFlex</span>
-          </h2>
-          <p className="hero-description">
-            ✅ Cobertura completa, atención rápida y las mejores tarifas.
-          </p>
-          <div className="hero-cta">
-            <button className="primary-btn">Cotiza ahora</button>
-            <button className="secondary-btn">Conoce nuestros planes</button>
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="features">
-        <div className="features-container">
-          {features.map(feature => (
-            <div key={feature.id} className="feature-card">
-              <div className="feature-icon">{feature.icon}</div>
-              <h3 className="feature-title">{feature.title}</h3>
-              <p className="feature-description">{feature.description}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="testimonials">
-        <div className="section-header">
-          <span className="chat-icon">💬</span>
-          <h2 className="section-title">Lo que dicen nuestros clientes</h2>
-        </div>
-        <div className="testimonials-container">
-          {testimonials.map(testimonial => (
-            <div key={testimonial.id} className="testimonial-card">
-              <img 
-                src={testimonial.avatar} 
-                alt={testimonial.name} 
-                className="testimonial-avatar" 
-              />
-              <p className="testimonial-text">
-                {testimonial.text} {testimonial.emoji}
-              </p>
-              <p className="testimonial-author">{testimonial.name} <span className="smile-icon">😊</span></p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section className="faq-section">
-        <div className="section-header">
-          <span className="question-icon">❓</span>
-          <h2 className="section-title">Preguntas Frecuentes</h2>
-        </div>
-        <p className="faq-description">
-          Resolvemos tus dudas más comunes para que estés 100% seguro. 🚘
-        </p>
-        <div className="faq-container">
-          <div className="faq-image-container">
-            <img 
-              src="https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2073&q=80" 
-              alt="FAQ" 
-              className="faq-image" 
-            />
-          </div>
-          <div className="faq-questions">
-            {faqs.map(faq => (
-              <details key={faq.id} className="faq-item">
-                <summary className="faq-question">{faq.question}</summary>
-                <p className="faq-answer">{faq.answer}</p>
-              </details>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Server Time Section */}
-      <section className="server-time">
-        <div className="time-container">
-          <h3>Estado del servidor:</h3>
-          {loading ? (
-            <p>Conectando con el servidor...</p>
-          ) : error ? (
-            <p className="error-message">{error}</p>
-          ) : currentTime ? (
-            <p>Servidor activo. Hora actual: {new Date(currentTime).toLocaleString()}</p>
-          ) : (
-            <p>Información del servidor no disponible</p>
-          )}
-          <button 
-            className="refresh-btn" 
-            onClick={fetchServerTime}
-            disabled={loading}
-          >
-            Actualizar
-          </button>
-        </div>
-      </section>
-
-      {/* WhatsApp Button */}
-      <div className="whatsapp-button">
-        <button className="whatsapp-btn">
-          <span className="whatsapp-icon">📱</span> WhatsApp
-        </button>
-      </div>
-
-      {/* Footer */}
-      <footer className="footer">
-        <div className="footer-content">
-          <p>© 2025 SegurosFlex - Todos los derechos reservados.</p>
-        </div>
-      </footer>
-    </div>
+    <AuthProvider>
+      <Router>
+        <AppRoutes />
+      </Router>
+    </AuthProvider>
   );
 }
 

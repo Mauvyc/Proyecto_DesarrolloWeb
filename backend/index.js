@@ -1,16 +1,27 @@
 import express from "express";
 import cors from "cors";
-import {Pool} from 'pg';
-import { FRONTEND_URL, ALLOWED_ORIGINS, DB_USER, DB_HOST, DB_DATABASE, DB_PASSWORD, DB_PORT, PORT } from "./config.js";
 import 'dotenv/config';
 import path from 'path';
 import { fileURLToPath } from 'url';
+
+// Importar configuración
+import { FRONTEND_URL, ALLOWED_ORIGINS, PORT } from "./config/config.js";
+
+// Importar rutas
+import authRoutes from './routes/authRoutes.js';
+import apiRoutes from './routes/apiRoutes.js';
+
+// Importar formateador de respuestas
+import ResponseFormatter from './views/responseFormatter.js';
 
 // Obtener el directorio actual (necesario para ESM)
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
+
+// Middleware para parsear JSON
+app.use(express.json());
 
 // Configuración de CORS para permitir múltiples orígenes
 app.use(cors({
@@ -29,28 +40,19 @@ app.use(cors({
     credentials: true // Permitir cookies en solicitudes cross-origin
 }));
 
-const pool = new Pool({
-    user: DB_USER,
-    host: DB_HOST,
-    database: DB_DATABASE,
-    password: DB_PASSWORD,
-    port: DB_PORT,
-});
-
-app.get("/ping", async(req, res) => {
-    const result = await pool.query('SELECT NOW()')
-    console.log(result)
-
-    res.send(
-        {
-            pong: result.rows[0].now,
-        }
-    );
-});
-
+// Ruta principal
 app.get("/", (req, res) => {
-    res.json({ users: [] });
+    const response = ResponseFormatter.success(
+        { message: "API funcionando correctamente", version: "1.0" },
+        "Bienvenido a la API de SegurosFlex",
+        200
+    );
+    ResponseFormatter.send(res, response);
 });
+
+// Usar rutas
+app.use('/api/auth', authRoutes);
+app.use('/api', apiRoutes);
 
 // Servir archivos estáticos desde la carpeta 'public'
 app.use(express.static(path.join(__dirname, 'public')));
@@ -60,8 +62,40 @@ app.get('/favicon.ico', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'favicon.ico'));
 });
 
-app.listen(PORT, () => {
-    console.log('Server is running on port 4000');
+// COMENTANDO TEMPORALMENTE LA RUTA PROBLEMÁTICA
+// Manejar cualquier otra ruta para SPA (Single Page Application)
+// app.get('/:path*?', (req, res) => {
+//    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+// });
+
+// Middleware para manejo de errores
+app.use((err, req, res, next) => {
+    console.error('Error en la aplicación:', err.stack);
+    
+    const response = ResponseFormatter.error(
+        process.env.NODE_ENV === 'production' ? 'Se produjo un error inesperado' : err.message,
+        500,
+        err
+    );
+    
+    ResponseFormatter.send(res, response);
 });
 
+// Middleware para rutas no encontradas
+app.use((req, res) => {
+    const response = ResponseFormatter.error(
+        'Ruta no encontrada',
+        404
+    );
+    
+    ResponseFormatter.send(res, response);
+});
 
+// Iniciar el servidor
+const PORT_NUMBER = PORT || 4000;
+app.listen(PORT_NUMBER, () => {
+    console.log(`Servidor ejecutándose en el puerto ${PORT_NUMBER}`);
+    console.log(`URL frontend: ${FRONTEND_URL}`);
+});
+
+export default app; 
