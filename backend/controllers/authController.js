@@ -6,7 +6,7 @@ import ResponseFormatter from '../views/responseFormatter.js';
 // Controlador para registro de usuario
 export const register = async (req, res) => {
     try {
-        const { nombre, apellido, email, password } = req.body;
+        const { nombre, apellido, email, password, telefono, dni } = req.body;
         
         // Verificar si el usuario ya existe
         const existingUser = await usuarioModel.findByEmail(email);
@@ -20,7 +20,7 @@ export const register = async (req, res) => {
         }
         
         // Crear el usuario
-        const newUser = await usuarioModel.create({ nombre, apellido, email, password });
+        const newUser = await usuarioModel.create({ nombre, apellido, email, password, telefono, dni });
         
         // Crear token JWT
         const token = jwt.sign(
@@ -36,7 +36,9 @@ export const register = async (req, res) => {
                     nombre: newUser.nombre,
                     apellido: newUser.apellido,
                     email: newUser.email,
-                    rol: newUser.rol
+                    rol: newUser.rol,
+                    telefono: newUser.telefono,
+                    dni: newUser.dni
                 },
                 token
             },
@@ -109,7 +111,7 @@ export const login = async (req, res) => {
 // Controlador para obtener perfil del usuario
 export const getProfile = async (req, res) => {
     try {
-        const user = await usuarioModel.findById(req.user.id);
+        const user = await usuarioModel.getFullProfile(req.user.id);
         
         if (!user) {
             const response = ResponseFormatter.error(
@@ -136,6 +138,5 @@ export const getProfile = async (req, res) => {
             error.message
         );
         return ResponseFormatter.send(res, response);
-        // hola
     }
 }; 
