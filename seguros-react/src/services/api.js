@@ -143,4 +143,166 @@ export const authService = {
   }
 };
 
+// Servicios para gestionar pólizas
+export const polizaService = {
+  // Obtener todas las pólizas disponibles
+  getPolizasDisponibles: async () => {
+    try {
+      const response = await api.get('/api/polizas/disponibles');
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+  
+  // Seleccionar una póliza
+  seleccionarPoliza: async (polizaId) => {
+    try {
+      const response = await api.post(`/api/polizas/seleccionar/${polizaId}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+  
+  // Obtener las pólizas del usuario
+  getPolizasUsuario: async () => {
+    try {
+      const response = await api.get('/api/polizas/usuario');
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+  
+  // Obtener detalles de una póliza específica
+  getPolizaById: async (polizaId) => {
+    try {
+      const response = await api.get(`/api/polizas/${polizaId}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+};
+
+// Servicios para gestionar vehículos
+export const vehiculoService = {
+  // Registrar un nuevo vehículo
+  registrarVehiculo: async (vehiculoData) => {
+    try {
+      const response = await api.post('/api/vehiculos', vehiculoData);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+  
+  // Obtener vehículos del usuario
+  getVehiculosUsuario: async () => {
+    try {
+      const response = await api.get('/api/vehiculos/usuario');
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+  
+  // Obtener detalles de un vehículo específico
+  getVehiculoById: async (vehiculoId) => {
+    try {
+      const response = await api.get(`/api/vehiculos/${vehiculoId}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+  
+  // Actualizar vehículo
+  updateVehiculo: async (vehiculoId, vehiculoData) => {
+    try {
+      const response = await api.put(`/api/vehiculos/${vehiculoId}`, vehiculoData);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+  
+  // Eliminar vehículo
+  deleteVehiculo: async (vehiculoId) => {
+    try {
+      const response = await api.delete(`/api/vehiculos/${vehiculoId}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+};
+
+// Servicios para gestionar pagos
+export const pagoService = {
+  // Procesar un pago
+  procesarPago: async (pagoData) => {
+    try {
+      const response = await api.post('/api/pagos', pagoData);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+  
+  // Obtener historial de pagos
+  getHistorialPagos: async () => {
+    try {
+      const response = await api.get('/api/pagos/historial');
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+  
+  // Obtener detalle de un pago específico
+  getPagoById: async (pagoId) => {
+    try {
+      const response = await api.get(`/api/pagos/${pagoId}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+};
+
+// Servicios para gestionar notificaciones
+export const notificacionService = {
+  // Obtener notificaciones del usuario
+  getNotificaciones: async () => {
+    try {
+      const response = await api.get('/api/notificaciones');
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+  
+  // Marcar notificación como leída
+  marcarLeida: async (notificacionId) => {
+    try {
+      const response = await api.put(`/api/notificaciones/${notificacionId}/marcar-leida`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+  
+  // Eliminar notificación
+  deleteNotificacion: async (notificacionId) => {
+    try {
+      const response = await api.delete(`/api/notificaciones/${notificacionId}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+};
+
 export default api; 

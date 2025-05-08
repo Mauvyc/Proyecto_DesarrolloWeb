@@ -1,0 +1,126 @@
+.poliza-selection-container {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.poliza-selection-title {
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.poliza-cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.poliza-card {
+  width: 300px;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  border: 2px solid transparent;
+}
+
+.poliza-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.poliza-card.selected {
+  border-color: #f04e4e;
+  box-shadow: 0 10px 20px rgba(240, 78, 78, 0.2);
+}
+
+.poliza-tipo {
+  font-size: 22px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.poliza-descripcion {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.poliza-precio {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.poliza-precio .precio {
+  font-size: 20px;
+  font-weight: 700;
+  color: #f04e4e;
+}
+
+.poliza-select-button {
+  width: 100%;
+  padding: 0.8rem;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.poliza-select-button:hover {
+  background-color: #444;
+}
+
+.poliza-select-button.selected {
+  background-color: #f04e4e;
+}
+
+.poliza-select-button.selected:hover {
+  background-color: #e04040;
+}
+
+.selected-poliza-info {
+  text-align: center;
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+}
+
+.selected-poliza-info p {
+  font-size: 18px;
+  margin-bottom: 1rem;
+}
+
+.poliza-continue-button {
+  padding: 0.8rem 1.5rem;
+  background-color: #f04e4e;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.poliza-continue-button:hover {
+  background-color: #e04040;
+} 

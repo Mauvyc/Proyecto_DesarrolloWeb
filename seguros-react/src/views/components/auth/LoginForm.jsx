@@ -104,6 +104,10 @@ const LoginForm = () => {
           {formErrors.password && <span className="error-message">{formErrors.password}</span>}
         </div>
         
+        <div className="forgot-password">
+          <Link to="/recuperar-contrasena">¿Olvidaste tu contraseña?</Link>
+        </div>
+        
         <button 
           type="submit" 
           className="auth-button"

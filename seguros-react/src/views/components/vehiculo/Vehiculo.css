@@ -1,0 +1,97 @@
+.vehiculo-form-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.vehiculo-form-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.vehiculo-form-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.vehiculo-form-description {
+  font-size: 16px;
+  color: #666;
+}
+
+.vehiculo-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.vehiculo-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.vehiculo-form-group label {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+}
+
+.vehiculo-form-group input,
+.vehiculo-form-group select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+.vehiculo-form-group input:focus,
+.vehiculo-form-group select:focus {
+  outline: none;
+  border-color: #f04e4e;
+}
+
+.vehiculo-form-group input.error,
+.vehiculo-form-group select.error {
+  border-color: #e74c3c;
+}
+
+.vehiculo-form-group .error-message {
+  color: #e74c3c;
+  font-size: 14px;
+}
+
+.vehiculo-form-group .field-hint {
+  font-size: 12px;
+  color: #777;
+}
+
+.vehiculo-submit-button {
+  margin-top: 1rem;
+  padding: 12px;
+  background-color: #f04e4e;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.vehiculo-submit-button:hover {
+  background-color: #e04040;
+}
+
+.vehiculo-submit-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+} 

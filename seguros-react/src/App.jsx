@@ -5,6 +5,11 @@ import LoginPage from "./views/pages/LoginPage";
 import RegisterPage from "./views/pages/RegisterPage";
 import Dashboard from "./views/pages/Dashboard";
 import HomePage from "./views/pages/HomePage";
+import ForgotPasswordPage from "./views/pages/ForgotPasswordPage";
+import PolizaSelectionPage from "./views/pages/PolizaSelectionPage";
+import VehiculoRegistroPage from "./views/pages/VehiculoRegistroPage";
+import PagoPolizaPage from "./views/pages/PagoPolizaPage";
+import NotificacionesPage from "./views/pages/NotificacionesPage";
 import "./views/styles/App.css";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:4000";
@@ -65,9 +70,34 @@ function AppRoutes() {
           <RegisterPage />
         </PublicRoute>
       } />
+      <Route path="/recuperar-contrasena" element={
+        <PublicRoute>
+          <ForgotPasswordPage />
+        </PublicRoute>
+      } />
       <Route path="/dashboard" element={
         <ProtectedRoute>
           <Dashboard />
+        </ProtectedRoute>
+      } />
+      <Route path="/elegir-poliza" element={
+        <ProtectedRoute>
+          <PolizaSelectionPage />
+        </ProtectedRoute>
+      } />
+      <Route path="/registrar-vehiculo" element={
+        <ProtectedRoute>
+          <VehiculoRegistroPage />
+        </ProtectedRoute>
+      } />
+      <Route path="/pago-poliza/:polizaId" element={
+        <ProtectedRoute>
+          <PagoPolizaPage />
+        </ProtectedRoute>
+      } />
+      <Route path="/notificaciones" element={
+        <ProtectedRoute>
+          <NotificacionesPage />
         </ProtectedRoute>
       } />
       {/* Ruta por defecto para manejar rutas inexistentes */}

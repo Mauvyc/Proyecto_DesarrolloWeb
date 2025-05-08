@@ -8,6 +8,8 @@ const RegisterForm = () => {
     nombre: '',
     apellido: '',
     email: '',
+    telefono: '',
+    dni: '',
     password: '',
     confirmPassword: ''
   });
@@ -51,6 +53,14 @@ const RegisterForm = () => {
       errors.email = 'El correo electrónico no es válido';
     }
     
+    if (!formData.telefono) {
+      errors.telefono = 'El teléfono es obligatorio';
+    }
+    
+    if (!formData.dni) {
+      errors.dni = 'El DNI es obligatorio';
+    }
+    
     if (!formData.password) {
       errors.password = 'La contraseña es obligatoria';
     } else if (formData.password.length < 6) {
@@ -90,40 +100,38 @@ const RegisterForm = () => {
   
   return (
     <div className="auth-form-container">
-      <h2>Registro</h2>
-      <p className="auth-description">Crea una cuenta para acceder a todos nuestros servicios.</p>
+      <h2>Crear Cuenta</h2>
+      <p className="auth-description">Completa tus datos para registrarte.</p>
       
       {submitError && <div className="auth-error">{submitError}</div>}
       
       <form className="auth-form" onSubmit={handleSubmit}>
-        <div className="form-row">
-          <div className="form-group">
-            <label htmlFor="nombre">Nombre</label>
-            <input
-              type="text"
-              id="nombre"
-              name="nombre"
-              value={formData.nombre}
-              onChange={handleChange}
-              placeholder="Juan"
-              className={formErrors.nombre ? 'error' : ''}
-            />
-            {formErrors.nombre && <span className="error-message">{formErrors.nombre}</span>}
-          </div>
-          
-          <div className="form-group">
-            <label htmlFor="apellido">Apellido</label>
-            <input
-              type="text"
-              id="apellido"
-              name="apellido"
-              value={formData.apellido}
-              onChange={handleChange}
-              placeholder="Pérez"
-              className={formErrors.apellido ? 'error' : ''}
-            />
-            {formErrors.apellido && <span className="error-message">{formErrors.apellido}</span>}
-          </div>
+        <div className="form-group">
+          <label htmlFor="nombre">Nombre</label>
+          <input
+            type="text"
+            id="nombre"
+            name="nombre"
+            value={formData.nombre}
+            onChange={handleChange}
+            placeholder="Tu Nombre"
+            className={formErrors.nombre ? 'error' : ''}
+          />
+          {formErrors.nombre && <span className="error-message">{formErrors.nombre}</span>}
+        </div>
+        
+        <div className="form-group">
+          <label htmlFor="apellido">Apellido</label>
+          <input
+            type="text"
+            id="apellido"
+            name="apellido"
+            value={formData.apellido}
+            onChange={handleChange}
+            placeholder="Tu Apellido"
+            className={formErrors.apellido ? 'error' : ''}
+          />
+          {formErrors.apellido && <span className="error-message">{formErrors.apellido}</span>}
         </div>
         
         <div className="form-group">
@@ -134,10 +142,38 @@ const RegisterForm = () => {
             name="email"
             value={formData.email}
             onChange={handleChange}
-            placeholder="tu@correo.com"
+            placeholder="ejemplo@correo.com"
             className={formErrors.email ? 'error' : ''}
           />
           {formErrors.email && <span className="error-message">{formErrors.email}</span>}
+        </div>
+        
+        <div className="form-group">
+          <label htmlFor="telefono">Teléfono</label>
+          <input
+            type="tel"
+            id="telefono"
+            name="telefono"
+            value={formData.telefono}
+            onChange={handleChange}
+            placeholder="+51 987 654 321"
+            className={formErrors.telefono ? 'error' : ''}
+          />
+          {formErrors.telefono && <span className="error-message">{formErrors.telefono}</span>}
+        </div>
+        
+        <div className="form-group">
+          <label htmlFor="dni">DNI</label>
+          <input
+            type="text"
+            id="dni"
+            name="dni"
+            value={formData.dni}
+            onChange={handleChange}
+            placeholder="12345678"
+            className={formErrors.dni ? 'error' : ''}
+          />
+          {formErrors.dni && <span className="error-message">{formErrors.dni}</span>}
         </div>
         
         <div className="form-group">
@@ -179,10 +215,7 @@ const RegisterForm = () => {
       
       <div className="auth-links">
         <p>
-          ¿Ya tienes una cuenta? <Link to="/login">Inicia sesión aquí</Link>
-        </p>
-        <p>
-          <Link to="/">Volver al inicio</Link>
+          ¿Ya tienes cuenta? <Link to="/login">Inicia sesión</Link>
         </p>
       </div>
     </div>

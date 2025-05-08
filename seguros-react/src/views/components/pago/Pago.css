@@ -1,0 +1,110 @@
+.pago-container {
+  max-width: 500px;
+  width: 100%;
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+
+.pago-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.pago-header h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.poliza-seleccionada {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.poliza-seleccionada p {
+  margin: 0;
+  font-size: 16px;
+}
+
+.poliza-precio {
+  font-size: 18px;
+  font-weight: 700;
+  color: #f04e4e;
+  margin-top: 0.5rem;
+}
+
+.pago-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #555;
+}
+
+.form-group input {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #f04e4e;
+}
+
+.form-group input.error {
+  border-color: #e74c3c;
+}
+
+.form-group .error-message {
+  color: #e74c3c;
+  font-size: 12px;
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+.pago-button {
+  margin-top: 1rem;
+  padding: 14px;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.pago-button:hover {
+  background-color: #218838;
+}
+
+.pago-button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+} 
