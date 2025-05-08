@@ -33,7 +33,7 @@ class UsuarioModel {
       `INSERT INTO ${DB_SCHEMA}.usuario (nombre, apellido, email, password, rol) 
        VALUES ($1, $2, $3, $4, $5) 
        RETURNING usuarioid, nombre, apellido, email, rol`,
-      [nombre, apellido, email, hashedPassword, 'user']
+      [nombre, apellido, email, hashedPassword, 'Beneficiario']
     );
     
     return result.rows[0];
