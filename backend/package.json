@@ -1,0 +1,24 @@
+{
+  "name": "seguros-flex-php-backend",
+  "version": "1.0.0",
+  "description": "Backend PHP para la aplicación SegurosFlex (wrapper)",
+  "main": "index.php",
+  "scripts": {
+    "start": "php -S 0.0.0.0:${PORT:-3000} -t .",
+    "test": "echo \"No tests configured\""
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mauvyc/Proyecto_DesarrolloWeb.git"
+  },
+  "keywords": [
+    "seguros",
+    "api",
+    "php"
+  ],
+  "author": "SegurosFlex Team",
+  "license": "ISC"
+} 
