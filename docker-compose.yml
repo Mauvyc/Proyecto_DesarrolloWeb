@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  php-app:
+    build: .
+    ports:
+      - "8080:80"
+    environment:
+      - PORT=80
+      - DB_HOST=${DB_HOST}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_PORT=${DB_PORT}
+      - DB_SCHEMA=${DB_SCHEMA}
+      - DB_SSL=${DB_SSL}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRES_IN=${JWT_EXPIRES_IN}
+      - FRONTEND_URL=${FRONTEND_URL}
+      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS}
+    volumes:
+      - ./backend:/var/www/html
+    restart: always 
