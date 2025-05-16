@@ -1,0 +1,18 @@
+{
+    "name": "seguros-flex/backend-php",
+    "description": "API backend para la aplicación SegurosFlex",
+    "type": "project",
+    "require": {
+        "php": ">=8.0",
+        "ext-pgsql": "*",
+        "ext-json": "*"
+    },
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "SegurosFlex Team",
+            "email": "info@segurosflex.com"
+        }
+    ],
+    "minimum-stability": "stable"
+} 

@@ -1,0 +1,9 @@
+# Habilitar reescritura de URLs
+RewriteEngine On
+
+# Si el directorio o archivo existe, no hacer nada
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Para manejar las rutas de la API
+RewriteRule ^(.*)$ index.php [QSA,L] 
