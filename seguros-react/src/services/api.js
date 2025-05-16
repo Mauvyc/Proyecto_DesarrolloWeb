@@ -4,7 +4,7 @@ import axios from 'axios';
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 
                     (window.location.hostname === 'localhost' 
                       ? 'http://localhost:4000'
-                      : 'https://backend-production-url.render.com'); // Actualizar con la URL de producción correcta
+                      : 'https://backend-web2.onrender.com'); // URL actualizada al nuevo backend
 
 console.log('Backend URL:', BACKEND_URL);
 
