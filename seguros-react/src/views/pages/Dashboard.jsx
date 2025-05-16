@@ -4,7 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import './Dashboard.css';
 
 const Dashboard = () => {
-  const { user, isAuthenticated } = useAuth();
+  const { user, isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
   
   useEffect(() => {
@@ -17,6 +17,12 @@ const Dashboard = () => {
   if (!user) {
     return <div className="loading">Cargando...</div>;
   }
+
+  // Manejar el cierre de sesión
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
 
   // Funciones para navegar a las diferentes secciones
   const irAPolizas = () => navigate('/mis-polizas');
@@ -35,9 +41,14 @@ const Dashboard = () => {
         
         <div className="user-info">
           <span>Hola, {user.nombre} {user.apellido}</span>
-          <button className="profile-button">
-            <span className="profile-icon">👤</span>
-          </button>
+          <div className="user-actions">
+            <button className="profile-button">
+              <span className="profile-icon">👤</span>
+            </button>
+            <button className="logout-button" onClick={handleLogout}>
+              Cerrar sesión
+            </button>
+          </div>
         </div>
       </header>
       
