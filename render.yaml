@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: segurosflex-backend
+    runtime: php
+    buildCommand: cd backend && composer install
+    startCommand: cd backend && vendor/bin/heroku-php-apache2
+    envVars:
+      - key: PHP_VERSION
+        value: 8.0
+    healthCheckPath: /ping
+    plan: free 
